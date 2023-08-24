@@ -1,4 +1,5 @@
 <?php
+
 namespace AbnDevs\Installer\Http\Controllers;
 
 use AbnDevs\Installer\Http\Requests\StoreAdminRequest;
@@ -48,7 +49,7 @@ class AdminController extends Controller
                 'name' => $request->validated('name'),
                 'email' => $request->validated('email'),
                 'password' => bcrypt($request->validated('password')),
-                ...config('installer.admin.extra')
+                ...config('installer.admin.extra'),
             ]);
 
             if (config('installer.admin.has_role')) {
@@ -58,7 +59,7 @@ class AdminController extends Controller
 
                 $superAdmin->assignRole(config('installer.admin.role'));
             }
-        }catch (\Exception $exception){
+        } catch (\Exception $exception) {
             return error($exception->getMessage());
         }
 

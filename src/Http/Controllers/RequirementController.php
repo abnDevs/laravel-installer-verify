@@ -1,4 +1,5 @@
 <?php
+
 namespace AbnDevs\Installer\Http\Controllers;
 
 use App\Http\Controllers\Controller;
@@ -17,6 +18,7 @@ class RequirementController extends Controller
     {
         if (! Cache::get('installer.agreement')) {
             flash('Please agree to the terms and conditions before proceeding.', 'error');
+
             return redirect()->route('installer.agreement.index');
         }
 
@@ -37,6 +39,7 @@ class RequirementController extends Controller
     {
         if (! Cache::get('installer.agreement')) {
             flash('Please agree to the terms and conditions before proceeding.', 'error');
+
             return redirect()->route('installer.agreement.index');
         }
 
@@ -122,38 +125,38 @@ class RequirementController extends Controller
                     }
 
                     break;
-                // check apache requirements
-                /*case 'apache':
-                    foreach ($requirement as $apache) {
-                        // if function doesn't exist we can't check apache modules
-                        if (function_exists('apache_get_modules')) {
-                            $results['requirements'][$type][$apache] = true;
+                    // check apache requirements
+                    /*case 'apache':
+                        foreach ($requirement as $apache) {
+                            // if function doesn't exist we can't check apache modules
+                            if (function_exists('apache_get_modules')) {
+                                $results['requirements'][$type][$apache] = true;
 
-                            if (! in_array($requirement, apache_get_modules())) {
-                                $results['requirements'][$type][$apache] = false;
+                                if (! in_array($requirement, apache_get_modules())) {
+                                    $results['requirements'][$type][$apache] = false;
 
-                                $results['errors'] = true;
+                                    $results['errors'] = true;
+                                }
                             }
                         }
-                    }
 
-                    break;
-                // check litespeed requirements
-                case 'litespeed':
-                    foreach ($requirement as $litespeed) {
-                        // if function doesn't exist we can't check litespeed modules
-                        if (function_exists('apache_get_modules')) {
-                            $results['requirements'][$type][$litespeed] = true;
+                        break;
+                    // check litespeed requirements
+                    case 'litespeed':
+                        foreach ($requirement as $litespeed) {
+                            // if function doesn't exist we can't check litespeed modules
+                            if (function_exists('apache_get_modules')) {
+                                $results['requirements'][$type][$litespeed] = true;
 
-                            if (! in_array($requirement, apache_get_modules())) {
-                                $results['requirements'][$type][$litespeed] = false;
+                                if (! in_array($requirement, apache_get_modules())) {
+                                    $results['requirements'][$type][$litespeed] = false;
 
-                                $results['errors'] = true;
+                                    $results['errors'] = true;
+                                }
                             }
                         }
-                    }
 
-                    break;*/
+                        break;*/
             }
         }
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace AbnDevs\Installer\Http\Controllers;
 
 use App\Http\Controllers\Controller;

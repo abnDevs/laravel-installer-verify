@@ -1,4 +1,5 @@
 <?php
+
 namespace AbnDevs\Installer\Facades;
 
 use Illuminate\Support\Facades\Facade;

@@ -17,7 +17,7 @@ return [
         'show_form' => true,
         'has_role' => false,
         'role' => '', // Role name ex: Super Admin
-        'extra' => []
+        'extra' => [],
     ],
 
     /*
@@ -84,6 +84,6 @@ return [
     ],
 
     'extra' => [
-        'command' => env('INSTALLER_EXTRA_COMMAND', false)
-    ]
+        'command' => env('INSTALLER_EXTRA_COMMAND', false),
+    ],
 ];

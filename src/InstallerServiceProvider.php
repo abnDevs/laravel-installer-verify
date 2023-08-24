@@ -1,4 +1,5 @@
 <?php
+
 namespace AbnDevs\Installer;
 
 use AbnDevs\Installer\Http\Middleware\InstallationMiddleware;

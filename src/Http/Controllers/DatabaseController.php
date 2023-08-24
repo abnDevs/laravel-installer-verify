@@ -1,7 +1,7 @@
 <?php
+
 namespace AbnDevs\Installer\Http\Controllers;
 
-use AbnDevs\Installer\Facades\License;
 use AbnDevs\Installer\Http\Requests\StoreDatabaseRequest;
 use App\Http\Controllers\Controller;
 use Brotzka\DotenvEditor\DotenvEditor;
@@ -82,6 +82,7 @@ class DatabaseController extends Controller
             ]);
         } catch (Exception $e) {
             Cache::forget('installer.database');
+
             return error($e->getMessage());
         }
     }

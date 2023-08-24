@@ -1,4 +1,5 @@
 <?php
+
 namespace AbnDevs\Installer\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;

@@ -1,4 +1,5 @@
 <?php
+
 namespace AbnDevs\Installer\Http\Middleware;
 
 use Closure;
