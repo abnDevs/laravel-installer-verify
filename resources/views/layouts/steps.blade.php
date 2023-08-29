@@ -6,27 +6,27 @@
 
 @if(!$withoutSteps)
     <div class="installation-steps shadow-sm bg-white">
-        <div @class(['active' => Route::is('installer.agreement.index'), 'done' => Cache::get('installer.agreement')])
+        <div @class(['active' => Route::is('installer.agreement.index'), 'done' => \AbnDevs\Installer\Facades\Installer::isStepDone('agreement')])
              data-bs-toggle="tooltip" data-bs-placement="bottom"
              data-bs-title="{{ config('installer.show_user_agreement') ? 'End-user License Agreement' : 'Welcome' }}">
             <i class="bi {{ config('installer.show_user_agreement') ? 'bi-file-earmark-check' : 'bi-house-door' }}"></i>
             <span>Step: 1</span>
         </div>
 
-        <div @class(['active' => Route::is('installer.requirements.index'), 'done' => Cache::get('installer.requirements')])
+        <div @class(['active' => Route::is('installer.requirements.index'), 'done' => \AbnDevs\Installer\Facades\Installer::isStepDone('requirements')])
              data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Server Requirements"><i
                 class="bi bi-database"></i><span>Step: 2</span></div>
 
-        <div @class(['active' => Route::is('installer.permissions.index'), 'done' => Cache::get('installer.permissions')])
+        <div @class(['active' => Route::is('installer.permissions.index'), 'done' => \AbnDevs\Installer\Facades\Installer::isStepDone('permissions')])
              data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Folder Permission"><i
                 class="bi bi-folder"></i><span>Step: 3</span></div>
 
-        <div @class(['active' => Route::is('installer.database.index'), 'done' => Cache::get('installer.database')])
+        <div @class(['active' => Route::is('installer.database.index'), 'done' => \AbnDevs\Installer\Facades\Installer::isStepDone('database')])
              data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Configure Database"><i
                 class="bi bi-database-check"></i><span>Step: 4</span></div>
 
         @if(config('installer.admin.show_form'))
-            <div @class(['active' => Route::is('installer.admin.index'), 'done' => Cache::get('installer.admin')])
+            <div @class(['active' => Route::is('installer.admin.index'), 'done' => \AbnDevs\Installer\Facades\Installer::isStepDone('admin')])
                  data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Admin Setup"><i
                     class="bi bi-person-check"></i><span>Step: 5</span></div>
         @endif

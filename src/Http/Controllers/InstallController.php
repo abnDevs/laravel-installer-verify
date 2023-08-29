@@ -2,10 +2,10 @@
 
 namespace AbnDevs\Installer\Http\Controllers;
 
+use AbnDevs\Installer\Facades\Installer;
 use AbnDevs\Installer\Http\Requests\StoreAgreementRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
@@ -13,7 +13,11 @@ class InstallController extends Controller
 {
     public function index()
     {
-        Cache::clear();
+        Installer::forgotStep('agreement');
+        Installer::forgotStep('requirements');
+        Installer::forgotStep('permissions');
+        Installer::forgotStep('database');
+        Installer::forgotStep('admin');
 
         $path = base_path(config('installer.user_agreement_file_path'));
         if (File::isFile($path)) {
@@ -31,7 +35,7 @@ class InstallController extends Controller
     public function store(StoreAgreementRequest $request)
     {
         if ($request->validated('agree') || !config('installer.show_user_agreement')) {
-            Cache::put('installer.agreement', true);
+            Installer::rememberStep('agreement');
 
             return redirect()->route('installer.requirements.index');
         }
@@ -41,11 +45,15 @@ class InstallController extends Controller
     {
         Storage::disk('local')->put('installed', now());
 
-        Cache::clear();
-
         if (config('installer.extra.command')) {
             Artisan::call(config('installer.extra.command'));
         }
+
+        Installer::forgotStep('agreement');
+        Installer::forgotStep('requirements');
+        Installer::forgotStep('permissions');
+        Installer::forgotStep('database');
+        Installer::forgotStep('admin');
 
         return view('installer::finish');
     }
