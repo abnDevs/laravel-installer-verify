@@ -2,8 +2,8 @@
 
 namespace AbnDevs\Installer\Http\Controllers;
 
-use AbnDevs\Installer\Facades\Installer;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 
 class PermissionController extends Controller
 {
@@ -23,13 +23,13 @@ class PermissionController extends Controller
 
     public function index()
     {
-        if (! Installer::isStepDone('agreement')) {
+        if (! Cache::get('installer.agreement')) {
             flash('Please agree to the terms and conditions.', 'error');
 
             return redirect()->route('installer.agreement.index');
         }
 
-        if (! Installer::isStepDone('requirements')) {
+        if (! Cache::get('installer.requirements')) {
             flash('Please check the requirements.', 'error');
 
             return redirect()->route('installer.requirements.index');
@@ -54,13 +54,13 @@ class PermissionController extends Controller
 
     public function store()
     {
-        if (! Installer::isStepDone('agreement')) {
+        if (! Cache::get('installer.agreement')) {
             flash('Please agree to the terms and conditions.', 'error');
 
             return redirect()->route('installer.agreement.index');
         }
 
-        if (! Installer::isStepDone('requirements')) {
+        if (! Cache::get('installer.requirements')) {
             flash('Please check the requirements.', 'error');
 
             return redirect()->route('installer.requirements.index');
@@ -81,7 +81,7 @@ class PermissionController extends Controller
             return redirect()->route('installer.permissions');
         }
 
-        Installer::rememberStep('permissions');
+        Cache::put('installer.permissions', true);
 
         return redirect()->route('installer.database.index');
     }

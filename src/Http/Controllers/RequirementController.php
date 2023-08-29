@@ -2,7 +2,6 @@
 
 namespace AbnDevs\Installer\Http\Controllers;
 
-use AbnDevs\Installer\Facades\Installer;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
 
@@ -17,7 +16,7 @@ class RequirementController extends Controller
 
     public function index()
     {
-        if (! Installer::isStepDone('agreement')) {
+        if (! Cache::get('installer.agreement')) {
             flash('Please agree to the terms and conditions before proceeding.', 'error');
 
             return redirect()->route('installer.agreement.index');
@@ -38,7 +37,7 @@ class RequirementController extends Controller
 
     public function store()
     {
-        if (! Installer::isStepDone('agreement')) {
+        if (! Cache::get('installer.agreement')) {
             flash('Please agree to the terms and conditions before proceeding.', 'error');
 
             return redirect()->route('installer.agreement.index');
@@ -56,7 +55,7 @@ class RequirementController extends Controller
             return redirect()->route('installer.requirements.index');
         }
 
-        Installer::rememberStep('requirements');
+        Cache::put('installer.requirements', true);
 
         return redirect()->route('installer.permissions.index');
     }

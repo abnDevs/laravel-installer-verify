@@ -2,7 +2,6 @@
 
 namespace AbnDevs\Installer\Http\Controllers;
 
-use AbnDevs\Installer\Facades\Installer;
 use AbnDevs\Installer\Http\Requests\StoreDatabaseRequest;
 use App\Http\Controllers\Controller;
 use Brotzka\DotenvEditor\DotenvEditor;
@@ -15,19 +14,19 @@ class DatabaseController extends Controller
 {
     public function __construct(readonly DotenvEditor $dotenvEditor)
     {
-        if (! Installer::isStepDone('agreement')) {
+        if (! Cache::get('installer.agreement')) {
             flash('Please agree to the terms and conditions.', 'error');
 
             return redirect()->route('installer.agreement.index');
         }
 
-        if (! Installer::isStepDone('requirements')) {
+        if (! Cache::get('installer.requirements')) {
             flash('Please check the requirements.', 'error');
 
             return redirect()->route('installer.requirements.index');
         }
 
-        if (! Installer::isStepDone('permissions')) {
+        if (! Cache::get('installer.permissions')) {
             flash('Please check the folder permissions.', 'error');
 
             return redirect()->route('installer.permissions.index');
@@ -71,7 +70,10 @@ class DatabaseController extends Controller
             Artisan::call('migrate:fresh --seed --force');
             Artisan::call('storage:link');
 
-            Installer::rememberStep('database');
+            Cache::put('installer.agreement', true);
+            Cache::put('installer.requirements', true);
+            Cache::put('installer.permissions', true);
+            Cache::put('installer.database', true);
 
             return response()->json([
                 'status' => 'success',
@@ -79,7 +81,7 @@ class DatabaseController extends Controller
                 'redirect' => route('installer.admin.index'),
             ]);
         } catch (Exception $e) {
-            Installer::forgotStep('database');
+            Cache::forget('installer.database');
 
             return error($e->getMessage());
         }
