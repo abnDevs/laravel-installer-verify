@@ -14,12 +14,6 @@ class DatabaseController extends Controller
 {
     public function __construct(readonly DotenvEditor $dotenvEditor)
     {
-        if (! Cache::get('installer.agreement')) {
-            flash('Please agree to the terms and conditions.', 'error');
-
-            return redirect()->route('installer.agreement.index');
-        }
-
         if (! Cache::get('installer.requirements')) {
             flash('Please check the requirements.', 'error');
 
