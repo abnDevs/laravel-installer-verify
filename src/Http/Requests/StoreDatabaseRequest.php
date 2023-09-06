@@ -14,7 +14,7 @@ class StoreDatabaseRequest extends FormRequest
             'port' => ['required', 'numeric'],
             'database' => ['required', 'string'],
             'username' => ['required', 'string'],
-            'password' => ['nullable', 'string'],
+            'password' => ['nullable', 'string', 'regex:/^[^\'"]*$/'],
             'force' => ['nullable', 'boolean'],
         ];
     }
@@ -22,5 +22,12 @@ class StoreDatabaseRequest extends FormRequest
     public function authorize(): bool
     {
         return true;
+    }
+
+    public function messages()
+    {
+        return [
+            'password.regex' => 'The password cannot contain quotes.',
+        ];
     }
 }
