@@ -4,7 +4,7 @@ namespace AbnDevs\Installer\Http\Controllers;
 
 use AbnDevs\Installer\Http\Requests\StoreDatabaseRequest;
 use App\Http\Controllers\Controller;
-use Brotzka\DotenvEditor\DotenvEditor;
+use Jackiedo\DotenvEditor\DotenvEditor;
 use Exception;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
@@ -57,7 +57,7 @@ class DatabaseController extends Controller
 
         // Save database credentials
         try {
-            $this->dotenvEditor->addData([
+            $this->dotenvEditor->setKeys([
                 'DB_CONNECTION' => $request->validated('driver'),
                 'DB_HOST' => $request->validated('host'),
                 'DB_PORT' => $request->validated('port'),
@@ -65,6 +65,7 @@ class DatabaseController extends Controller
                 'DB_USERNAME' => $request->validated('username'),
                 'DB_PASSWORD' => $request->validated('password'),
             ]);
+            $this->dotenvEditor->save();
 
             // Migrate database
             Artisan::call('migrate:fresh --seed --force');
