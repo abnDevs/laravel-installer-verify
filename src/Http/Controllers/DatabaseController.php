@@ -14,19 +14,19 @@ class DatabaseController extends Controller
 {
     public function __construct(readonly DotenvEditor $dotenvEditor)
     {
-        if (! Cache::get('installer.agreement')) {
+        if (Cache::get('installer.agreement') != 1) {
             flash('Please agree to the terms and conditions.', 'error');
 
             return redirect()->route('installer.agreement.index');
         }
 
-        if (! Cache::get('installer.requirements')) {
+        if (Cache::get('installer.requirements') != 1) {
             flash('Please check the requirements.', 'error');
 
             return redirect()->route('installer.requirements.index');
         }
 
-        if (! Cache::get('installer.permissions')) {
+        if (Cache::get('installer.permissions') != 1) {
             flash('Please check the folder permissions.', 'error');
 
             return redirect()->route('installer.permissions.index');

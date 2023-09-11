@@ -12,25 +12,25 @@ class AdminController extends Controller
 {
     public function __construct()
     {
-        if (! Cache::get('installer.agreement')) {
+        if (Cache::get('installer.agreement') != 1) {
             flash('Please agree to the terms and conditions.', 'error');
 
             return redirect()->route('installer.agreement.index');
         }
 
-        if (! Cache::get('installer.requirements')) {
+        if (Cache::get('installer.requirements') != 1) {
             flash('Please check the requirements.', 'error');
 
             return redirect()->route('installer.requirements.index');
         }
 
-        if (! Cache::get('installer.permissions')) {
+        if (Cache::get('installer.permissions') != 1) {
             flash('Please check the folder permissions.', 'error');
 
             return redirect()->route('installer.permissions.index');
         }
 
-        if (! Cache::get('installer.database')) {
+        if (Cache::get('installer.database') != 1) {
             flash('Please configure your database connection.', 'error');
 
             return redirect()->route('installer.database.index');

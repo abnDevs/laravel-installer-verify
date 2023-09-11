@@ -23,13 +23,13 @@ class PermissionController extends Controller
 
     public function index()
     {
-        if (! Cache::get('installer.agreement')) {
+        if (Cache::get('installer.agreement') != 1) {
             flash('Please agree to the terms and conditions.', 'error');
 
             return redirect()->route('installer.agreement.index');
         }
 
-        if (! Cache::get('installer.requirements')) {
+        if (Cache::get('installer.requirements') != 1) {
             flash('Please check the requirements.', 'error');
 
             return redirect()->route('installer.requirements.index');
@@ -49,13 +49,13 @@ class PermissionController extends Controller
 
     public function store()
     {
-        if (! Cache::get('installer.agreement')) {
+        if (Cache::get('installer.agreement') != 1) {
             flash('Please agree to the terms and conditions.', 'error');
 
             return redirect()->route('installer.agreement.index');
         }
 
-        if (! Cache::get('installer.requirements')) {
+        if (Cache::get('installer.requirements') !=1 ) {
             flash('Please check the requirements.', 'error');
 
             return redirect()->route('installer.requirements.index');
