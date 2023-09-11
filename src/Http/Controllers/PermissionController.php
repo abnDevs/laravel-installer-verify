@@ -39,15 +39,10 @@ class PermissionController extends Controller
             config('installer.permissions')
         );
 
-        $procOpen = $this->checkProcOpen();
-        $allowUrlFopen = $this->checkAllowUrlFopen();
-
-        $hasError = $permissions['errors'] || ! $procOpen || ! $allowUrlFopen;
+        $hasError = $permissions['errors'];
 
         return view('installer::permissions', [
             'permissions' => $permissions['permissions'],
-            'procOpen' => $procOpen,
-            'allowUrlFopen' => $allowUrlFopen,
             'hasError' => $hasError,
         ]);
     }
@@ -70,10 +65,7 @@ class PermissionController extends Controller
             config('installer.permissions')
         );
 
-        $procOpen = $this->checkProcOpen();
-        $allowUrlFopen = $this->checkAllowUrlFopen();
-
-        $hasError = $permissions['errors'] || ! $procOpen || ! $allowUrlFopen;
+        $hasError = $permissions['errors'];
 
         if ($hasError) {
             flash('Please check the permissions.', 'error');
@@ -130,27 +122,5 @@ class PermissionController extends Controller
         $this->addFile($folder, $permission, $isSet);
 
         $this->results['errors'] = true;
-    }
-
-    private function checkProcOpen()
-    {
-        $procOpen = true;
-
-        if (! function_exists('proc_open')) {
-            $procOpen = false;
-        }
-
-        return $procOpen;
-    }
-
-    private function checkAllowUrlFopen()
-    {
-        $allowUrlFopen = true;
-
-        if (! ini_get('allow_url_fopen')) {
-            $allowUrlFopen = false;
-        }
-
-        return $allowUrlFopen;
     }
 }

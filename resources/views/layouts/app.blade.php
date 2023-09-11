@@ -27,7 +27,9 @@
 
 <div class="container">
     <div class="content">
-        <h5 class="page-title">@hasSection('title')@yield('title')@elseif(isset($title)){{ $title }}@endif</h5>
+        @if(!isset($disableTitle))
+            <h5 class="page-title">@hasSection('title')@yield('title')@elseif(isset($title)){{ $title }}@endif</h5>
+        @endif
 
         @yield('content')
     </div>

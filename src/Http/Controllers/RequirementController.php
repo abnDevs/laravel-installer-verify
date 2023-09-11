@@ -26,11 +26,17 @@ class RequirementController extends Controller
 
         $requirements = $this->checkServerRequirements();
 
-        $hasError = ! $phpSupportInfo['supported'] || ($requirements['errors'] ?? false);
+        $procOpen = $this->checkProcOpen();
+
+        $allowUrlFopen = $this->checkAllowUrlFopen();
+
+        $hasError = ! $phpSupportInfo['supported'] || ($requirements['errors'] ?? false) || ! $procOpen || ! $allowUrlFopen;
 
         return view('installer::requirements', [
             'phpSupportInfo' => $phpSupportInfo,
             'requirements' => $requirements,
+            'procOpen' => $procOpen,
+            'allowUrlFopen' => $allowUrlFopen,
             'hasError' => $hasError,
         ]);
     }
@@ -161,5 +167,27 @@ class RequirementController extends Controller
         }
 
         return $results;
+    }
+
+    private function checkProcOpen()
+    {
+        $procOpen = true;
+
+        if (! function_exists('proc_open')) {
+            $procOpen = false;
+        }
+
+        return $procOpen;
+    }
+
+    private function checkAllowUrlFopen()
+    {
+        $allowUrlFopen = true;
+
+        if (! ini_get('allow_url_fopen')) {
+            $allowUrlFopen = false;
+        }
+
+        return $allowUrlFopen;
     }
 }
